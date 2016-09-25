@@ -15,4 +15,7 @@ public interface BBSBiz {
 	public BulletinBoardSystemVO getPosting(int Id);
 	
 	public boolean deletPosting(int Id);
+	
+	public List<BulletinBoardSystemVO> searchPosting(String search);
+	
 }

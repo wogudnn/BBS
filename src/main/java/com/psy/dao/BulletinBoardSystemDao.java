@@ -17,4 +17,6 @@ public interface BulletinBoardSystemDao {
 	public void deletePosting(int Id);
 	
 	public void updateHitCount(int Id);
+	
+	public List<BulletinBoardSystemVO> searchPosting(String search);
 }

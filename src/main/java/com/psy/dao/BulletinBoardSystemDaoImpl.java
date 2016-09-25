@@ -311,4 +311,73 @@ public class BulletinBoardSystemDaoImpl implements BulletinBoardSystemDao {
 		}
 		
 	}
+	@Override
+	public List<BulletinBoardSystemVO> searchPosting(String search) {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","BBS","BBS");
+			StringBuffer query = new StringBuffer();
+			query.append(" SELECT	ID ");
+			query.append(" 			, TITLE ");
+			query.append(" 			, CONT ");
+			query.append(" 			, HIT_CNT ");
+			query.append(" 			, RCND_CNT ");
+			query.append(" 			, CRTR_NM ");
+			query.append(" 			, TO_CHAR(CRT_DT, 'YYYY-MM-DD HH24:MI:SS') CRT_DT ");
+			query.append(" FROM		BBS ");
+			query.append(" WHERE	TITLE LIKE '%'||?||'%' ");
+			query.append(" OR		CONT LIKE '%'||?||'%' ");
+			
+			pstmt = conn.prepareStatement(query.toString());
+			pstmt.setString(1, search);
+			pstmt.setString(2, search);
+			
+			rs = pstmt.executeQuery();
+			
+			List<BulletinBoardSystemVO> boardSystems = new ArrayList<BulletinBoardSystemVO>();
+			BulletinBoardSystemVO boardSystemVO = null;
+			
+			while(rs.next()) {
+				boardSystemVO = new BulletinBoardSystemVO();
+				boardSystemVO.setId(rs.getInt("ID"));
+				boardSystemVO.setTitle(rs.getString("TITLE"));
+				boardSystemVO.setContents(rs.getString("CONT"));
+				boardSystemVO.setHitCount(rs.getInt("HIT_CNT"));
+				boardSystemVO.setRecommendConunt(rs.getInt("RCND_CNT"));
+				boardSystemVO.setCreatorName(rs.getString("CRTR_NM"));
+				boardSystemVO.setCreateDate(rs.getString("CRT_DT"));
+				
+				boardSystems.add(boardSystemVO);
+			}
+			return boardSystems;
+					
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		finally{
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {}
+			}
+			if(pstmt != null ){
+				try {
+					pstmt.close();
+				} catch (SQLException e) {}
+			}
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+	}
 }

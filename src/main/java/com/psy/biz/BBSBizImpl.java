@@ -41,5 +41,9 @@ public class BBSBizImpl implements BBSBiz {
 		dao.deletePosting(Id);
 		return true;
 	}
-	
+	@Override
+	public List<BulletinBoardSystemVO> searchPosting(String search) {
+		
+		return dao.searchPosting(search);
+	}
 }

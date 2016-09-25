@@ -20,7 +20,7 @@
 			<th>Create Date</th>
 		</tr>
 		<c:forEach items="${boardSystems}" var="list" >
-		<tr style="width: 300px; height: 30px; border: 1px solid #000000 ">
+		<tr style="width: 300px; height: 30px; border: 1px solid #000000; text-align:center">
 			<td>${list.getId()}</td>
 			<td><a href="/BBS/detail?Id=${list.getId()}">${list.getTitle()}</a></td>
 			<td>${list.getHitCount()}</td>
@@ -30,6 +30,7 @@
 		</tr>	
 		</c:forEach>
 	</table>
-	<a href="/BBS/write">글쓰기</a>
+	<a href="/BBS/write">글쓰기</a> <form name="saechForm" method="post" action="/BBS/search" >
+	검색하기<input name="saerch" type="text" style="width:100px" /><input type="submit" value="검색" /></form>
 </body>
 </html>
