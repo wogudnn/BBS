@@ -1,0 +1,56 @@
+@CHARSET "UTF-8";
+
+#wrapper{
+	width: 600px;
+}
+.posting{
+	width: 600px;
+	margin-top: 20px;
+	
+}
+.top{
+	border: 1px solid #000000;
+	padding: 5px;
+}
+.mid{
+	border: 1px solid #000000;
+	padding: 5px;
+}
+.id {
+	display: inline-block;
+	font-size: 15px;
+	color: #808080;
+} 
+.title { 
+	display: inline-block;
+	font-weight: bold;
+	font-size: 20px;
+}
+.creator{
+	display: inline-block;
+	font-size: 13px;
+}
+.hitcount{
+	display: inline-block;
+	font-size: 13px;
+	padding-left: 15px;
+}
+.recommend{
+	display: inline-block;
+	font-size: 13px;
+	padding-left: 15px;
+}
+.createdate{
+	display: inline-block;
+	font-size: 13px;
+	padding-left: 15px;
+}
+.content{
+	border: 1px solid #000000;
+	font-size: 12px;
+	padding: 5px;
+}
+#write{
+	padding-top: 10px;
+	text-align: right;
+}

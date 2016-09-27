@@ -1,36 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BBSList</title>
+<link rel="stylesheet" type="text/css" href="/BBS/css/listcss.css">
 </head>
 <body>
 	<h1>게시판 입니다.</h1>
-		<hr/>
-	<table style="width:100%; border-collapse: collapse; border: 1px solid #000000 ">
-		<tr style="width: 300px; height: 30px; border: 1px solid #000000 ">
-			<th>ID</th>
-			<th>Title</th>
-			<th>Hit Count</th>
-			<th>Recommend Count</th>
-			<th>Creator Name</th>
-			<th>Create Date</th>
-		</tr>
-		<c:forEach items="${boardSystems}" var="list" >
-		<tr style="width: 300px; height: 30px; border: 1px solid #000000; text-align:center">
-			<td>${list.getId()}</td>
-			<td><a href="/BBS/detail?Id=${list.getId()}">${list.getTitle()}</a></td>
-			<td>${list.getHitCount()}</td>
-			<td>${list.getRecommendConunt()}</td>
-			<td>${list.getCreatorName()}</td>
-			<td>${list.getCreateDate()}</td>
-		</tr>	
-		</c:forEach>
-	</table>
-	<a href="/BBS/write">글쓰기</a> <form name="saechForm" method="post" action="/BBS/search" >
-	검색하기<input name="saerch" type="text" style="width:100px" /><input type="submit" value="검색" /></form>
+	<hr/>
+		<div id="wrapper">
+			<c:forEach items="${boardSystems}" var="boardSystem">
+				<div class="posting">
+					<div class="top">
+						<div class="id">${boardSystem.id}</div>
+						<div class="title"><a href="/BBS/detail?Id=${boardSystem.id}"> ${boardSystem.title}</a></div>
+					</div>
+					<div class="mid">
+						<div class="creator">작성자 : ${boardSystem.getCreatorName()}</div>
+						<div class="hitcount">조회수 : ${boardSystem.hitCount}</div>
+						<div class="recommend">추천수 : ${boardSystem.recommendConunt}</div>
+						<div class="createdate">작성시간 : ${boardSystem.getCreateDate()}</div>
+					</div>
+						<div class="content">
+							<c:choose>
+								<c:when test="${fn:length(boardSystem.contents)>50}">
+									${fn:substring(boardSystem.contents, 0, 50)}...
+								</c:when>
+								<c:otherwise>
+									${boardSystem.contents}
+								</c:otherwise>
+							</c:choose>
+						</div>
+				</div>
+			</c:forEach>
+			<div id="write">
+				<input type="button" value="글쓰기" onclick="location.href='/BBS/write'" />
+			</div>
+		</div>
 </body>
 </html>
